@@ -13,7 +13,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 
 import streamlit as st
 
-st.title("Pergunte algo sobre um video do YouTube 📽️")
+st.title("Respostas contextualizadas sobre qualquer vídeo do YouTube 📽️")
 
 ANTHROPIC_API_KEY = st.sidebar.text_input("Digite sua chave ANTHROPIC:", type="password")
 HUGGINGFACEHUB_API_TOKEN = st.sidebar.text_input("Digite sua chave HUGGING FACE HUB:", type="password")
@@ -50,11 +50,11 @@ def load_video(url_video, language=["pt", "pt-BR", "en"], translation="pt"):
   
   docs = video_loader.load()
 
-  transcript = docs[0].page_content
+#   transcript = docs[0].page_content
 
   embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-m3")
 
-  vector_store = FAISS.from_documents([transcript], embeddings)
+  vector_store = FAISS.from_documents(docs, embeddings)
 
   return vector_store
 
